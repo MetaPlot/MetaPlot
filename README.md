@@ -4,7 +4,11 @@ Metadata writer and helper functions for image files useful for tracking provena
 
 # Dependencies
 
-we are currently using pyexiv2, can get it as
+* Python `svn` module
+
+* Python `pkg_resources` module
+
+* we are currently using pyexiv2, can get it as
 
 ```
 apt-get install python-pyexiv
