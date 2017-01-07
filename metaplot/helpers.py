@@ -61,3 +61,35 @@ def svn_information(svndir=None, label=None):
     else:
         k = 'SVN INFO'
     return {k: v}
+
+
+
+def get_git_hash(gitpath=None, label=None):
+    """
+    Helper function for obtaining the git repository hash.
+    for the current directory (default)                                                          
+    or the directory supplied in the gitpath argument.                                                                            
+                                                                                                                                  
+    Returns a dictionary keyed (by default) as 'GIT HASH'                                                                         
+    where the value is a string containing essentially what                                                                       
+    is returned by subprocess.  
+
+    The optional argument 'label' allows you to set the string 
+    used as the dictionary key in the returned dictionary.
+    """
+    if gitpath:
+        os.chdir(gitpath)
+    try:
+        sha = subprocess.check_output(['git','rev-parse','HEAD'],shell=False).strip()
+    except subprocess.CalledProcessError as e:
+        print("ERROR: WORKING DIRECTORY NOT A GIT REPOSITORY")
+        return {}
+    
+    if label:
+        l = '{}'.format(label)
+    else:
+        l = 'GIT HASH'
+
+    return {l:sha}
+
+
