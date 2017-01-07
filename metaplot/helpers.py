@@ -1,11 +1,12 @@
 import os
+import subprocess
 
 try:
     import svn.local
     _has_svn_local = True
 except:
     _has_svn_local = False
-
+    
 def test_helper():
     return "test helper text"
 
