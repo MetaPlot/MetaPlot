@@ -1,0 +1,11 @@
+# %ECSV 0.9
+# ---
+# datatype:
+# - {name: x, datatype: int64}
+# - {name: y, datatype: int64}
+x y
+1 6
+2 7
+3 8
+4 9
+5 10
