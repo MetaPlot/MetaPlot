@@ -122,13 +122,18 @@ def get_git_hash(gitpath=None, label=None):
     The optional argument 'label' allows you to set the string 
     used as the dictionary key in the returned dictionary.
     """
+    thisdir = ''
     if gitpath:
+        thisdir = os.getcwd()
         os.chdir(gitpath)
+        
     try:
         sha = subprocess.check_output(['git','rev-parse','HEAD'],shell=False).strip()
     except subprocess.CalledProcessError as e:
         print("ERROR: WORKING DIRECTORY NOT A GIT REPOSITORY")
         return {}
+
+    os.chdir(thisdir)
     
     if label:
         l = '{}'.format(label)
