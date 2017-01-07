@@ -1,5 +1,13 @@
 import os
+import sys
 import subprocess
+import pkg_resources
+
+try:
+    import pkg_resources
+    _has_pkg_resources = True
+except:
+    _has_pkg_resources = False
 
 try:
     import svn.local
@@ -9,6 +17,37 @@ except:
     
 def test_helper():
     return "test helper text"
+
+def dict_to_str(d):
+    """
+    Given a dictionary d, return a string with 
+    each entry in the form 'key: value' and entries
+    separated by newlines.
+    """
+    vals = []
+    for k in d.keys():
+        vals.append('{}: {}'.format(k, d[k]))
+    v = '\n'.join(vals)
+    return v
+
+def module_version(module, label=None):
+    """
+    Helper function for getting the module ("module") in the current
+    namespace and their versions.
+    
+    The optional argument 'label' allows you to set the 
+    string used as the dictionary key in the returned dictionary.
+
+    By default the key is '[module] version'.
+    """
+    if not _has_pkg_resources:
+        return {}
+    version = pkg_resources.get_distribution(module).version
+    if label:
+        k = '{}'.format(label)
+    else:
+        k = '{} version'.format(module)
+    return {k: '{}'.format(version)}
 
 def file_contents(filename, label=None):
     """
@@ -63,17 +102,12 @@ def svn_information(svndir=None, label=None):
     except:
         print('ERROR: WORKING DIRECTORY NOT AN SVN REPOSITORY.')
         return {}
-    vals = []
-    for k in info.keys():
-        vals.append('{}: {}'.format(k, info[k]))
-    v = '\n'.join(vals)
+    v = dict_to_str(info)
     if label:
         k = '{}'.format(label)
     else:
         k = 'SVN INFO'
     return {k: v}
-
-
 
 def get_git_hash(gitpath=None, label=None):
     """
@@ -88,13 +122,18 @@ def get_git_hash(gitpath=None, label=None):
     The optional argument 'label' allows you to set the string 
     used as the dictionary key in the returned dictionary.
     """
+    thisdir = ''
     if gitpath:
+        thisdir = os.getcwd()
         os.chdir(gitpath)
+        
     try:
         sha = subprocess.check_output(['git','rev-parse','HEAD'],shell=False).strip()
     except subprocess.CalledProcessError as e:
         print("ERROR: WORKING DIRECTORY NOT A GIT REPOSITORY")
         return {}
+
+    os.chdir(thisdir)
     
     if label:
         l = '{}'.format(label)
@@ -132,4 +171,3 @@ def get_source_code(scode,sourcepath=None, label=None):
             n = {'source code':s}
     return n
             
-        
