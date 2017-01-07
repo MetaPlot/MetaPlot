@@ -1,1 +1,1 @@
-[]
+[{"kwargs": {}, "args": [[1, 2, 3], [1, 2, 3], "ro-"], "ids_return": [], "func": "plot", "id_obj": null}, {"kwargs": {"color": "k", "linestyle": "dashed"}, "args": [[4, 5, 6], [4, 5, 6]], "ids_return": [], "func": "plot", "id_obj": null}, {"kwargs": {}, "args": ["custom xlabel"], "ids_return": [], "func": "xlabel", "id_obj": null}, {"kwargs": {}, "args": ["custom ylabel"], "ids_return": [], "func": "ylabel", "id_obj": null}]
