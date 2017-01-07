@@ -1,5 +1,10 @@
 import os
-import svn.local
+
+try:
+    import svn.local
+    _has_svn_local = True
+except:
+    _has_svn_local = False
 
 def test_helper():
     return "test helper text"
@@ -42,6 +47,11 @@ def svn_information(svndir=None, label=None):
     The optional argument 'label' allows you to set the 
     string used as the dictionary key in the returned dictionary.
     """
+    if not _has_svn_local:
+        print('SVN information unavailable.')
+        print('You do not have the "svn" package installed.')
+        print('Install "svn" from pip using "pip install svn"')
+        return {}
     if svndir:
         repo = svn.local.LocalClient(svndir)
     else:
