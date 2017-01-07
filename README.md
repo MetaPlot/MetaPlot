@@ -2,6 +2,13 @@
 
 Metadata writer and helper functions for image files useful for tracking provenance in scientific plots.
 
+# Dependencies
+
+we are currently using pyexiv2, can get it as
+
+```
+apt-get install python-pyexiv
+```
 
 # Install
 
